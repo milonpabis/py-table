@@ -2,8 +2,9 @@ import pytesseract
 from pytesseract import Output
 from PIL import Image
 import cv2
-from PyTable import PyTable
+from PyTable import PyTable, ImageClarify
 import csv
+
 
 TESSERACT_PATH = "F:\\Tesseract\\tesseract.exe"
 IMG_PATH = "test4.JPG"
@@ -24,11 +25,14 @@ IMG_PATH = "test4.JPG"
 
 
 if __name__ == "__main__":
-    image = Image.open(IMG_PATH)
-    image = image.convert('L')
-    image = image.point(lambda p: 255 if p > 170 else 0)
-    image = image.convert("1")
-    image.show()
+    image = cv2.imread(IMG_PATH)
+    normalized = ImageClarify.normalize(image)
+    deskewed = ImageClarify.deskew(normalized)
+    cv2.imshow("test", image)
+    cv2.imshow("result", normalized)
+    cv2.imshow("desk", deskewed)
+    if cv2.waitKey(0) == ord('q'):
+        pass
     
     engine = PyTable(TESSERACT_PATH)
     res = engine.convert_image(IMG_PATH)
