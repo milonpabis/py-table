@@ -66,4 +66,10 @@ class ImageClarify:
     def set_image_dpi(img):
         #
         ...
+
+    def gray_scale(img):
+        return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    
+    def athreshold(img):
+        return cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 2)
         
